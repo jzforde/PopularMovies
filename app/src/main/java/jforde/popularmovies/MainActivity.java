@@ -19,9 +19,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import jforde.popularmovies.view.MovieSorter;
-import jforde.popularmovies.view.PopularMoviesFragment;
-import jforde.popularmovies.view.TopMoviesFragment;
+import jforde.popularmovies.view.R;
 
 /**
  * Created by jillianforde on 6/19/16.
@@ -36,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(jforde.popularmovies.R.layout.activity_all_movies);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();

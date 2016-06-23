@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import jforde.popularmovies.view.R;
+
 import static jforde.popularmovies.TopMoviesFragment.RecyclerViewAdapter.ViewHolder.VHTAG;
 
 /**
@@ -32,7 +34,7 @@ public class TopMoviesFragment extends Fragment implements MovieSorter.NetworkLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_all_movies, container, false);
+                R.layout.top_movies_fragment, container, false);
         movieSorter.sortByRating(this);
         Log.i(TAG, " onCreateView just happened");
         return rv;

@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="jforde.popularmovies"
+<manifest package="jforde.popularmovies.view"
           xmlns:android="http://schemas.android.com/apk/res/android">
-
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/clapperboard"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".AllMoviesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        android:theme="@style/Theme.DesignDemo">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity android:name="jforde.popularmovies.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name="jforde.popularmovies.MovieDetailsActivity"
+                  android:parentActivityName="jforde.popularmovies.MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="jforde.popularmovies.MainActivity" />
+        </activity>
+        <activity android:name="jforde.popularmovies.FavoriteMoviesActivity"
+                  android:parentActivityName="jforde.popularmovies.MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="jforde.popularmovies.MainActivity" />
+        </activity>
+    </application>
+    <!-- This is required for Glide to work. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

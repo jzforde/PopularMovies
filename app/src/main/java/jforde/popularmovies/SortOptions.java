@@ -1,7 +1,5 @@
 package jforde.popularmovies;
 
-import jforde.popularmovies.view.MovieSorter;
-
 /**
  * Created by jillianforde on 5/7/16.
  */

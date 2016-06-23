@@ -1,11 +1,11 @@
 package jforde.popularmovies;
 
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,9 +19,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import jforde.popularmovies.Movie;
-import jforde.popularmovies.MovieDetailsActivity;
-import jforde.popularmovies.MovieSorter;
+import jforde.popularmovies.view.R;
 
 /**
  * Created by jillianforde on 6/19/16.
@@ -29,15 +27,14 @@ import jforde.popularmovies.MovieSorter;
 
 public class PopularMoviesFragment extends Fragment implements MovieSorter.NetworkListener{
     static MovieSorter movieSorter = new MovieSorter();
-    String TAG = "CheeseListFragment";
+    String TAG = "PopularMoviesFragment";
     RecyclerView rv;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rv = (RecyclerView) inflater.inflate(
-                jforde.popularmovies.R.layout.fragment_all_movies, container, false);
-        movieSorter.sortByRating(this);
+        rv = (RecyclerView) inflater.inflate(R.layout.fragment_all_movies, container, false);
+        movieSorter.sortByPopularity(this);
         Log.i(TAG, " onCreateView just happened");
         return rv;
     }
@@ -64,7 +61,7 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mImageView = (ImageView) view.findViewById(R.id.avatar);
+                mImageView = (ImageView) view.findViewById(R.id.poster);
                 //mTextView = (TextView) view.findViewById(android.R.id.text1);
             }
         }
@@ -79,7 +76,7 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Log.i(ViewHolder.VHTAG, "CheeselistFragment:  IN ON CREATE VIEW HOLDER");
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item, parent, false);
+                    .inflate(R.layout.movie_poster, parent, false);
             view.setBackgroundResource(mBackground);
             return new ViewHolder(view);
         }

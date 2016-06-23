@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">PopularMovies</string>
+    <string name="app_name">Movies</string>
+    <string name="sort">Sort</string>
+    <string name="popular_sort">Most popular</string>
+    <string name="rating_sort">Top rated</string>
+    <string name="secret_key">a907d34d89a9518ff85422c057b4da9d</string>
+    <string name="favorites_item">Favorites</string>
 </resources>

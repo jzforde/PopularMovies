@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/popular_sort"
+        android:title="@string/popular_sort"
+        android:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/rating_sort"
+        android:title="@string/rating_sort"
+        android:showAsAction="collapseActionView"/>
 </menu>

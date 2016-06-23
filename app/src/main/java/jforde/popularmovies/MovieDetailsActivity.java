@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import jforde.popularmovies.R;
+import jforde.popularmovies.view.R;
+
 
 /**
  * Created by jillianforde on 6/18/16.
@@ -23,6 +25,7 @@ public class MovieDetailsActivity extends AppCompatActivity{
     public static final String EXTRA_OVERVIEW = "movie_overview";
     public static final String EXTRA_VOTE_AVG = "vote_avg";
     public static String EXTRA_RELEASE_DATE = "release_date";
+    private final String TAG = "MovieDetailsActivity";
     String moviePosterImg;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class MovieDetailsActivity extends AppCompatActivity{
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(moviePosterImg).centerCrop().into(imageView);
+        Log.i(TAG, "Loading backdrop");
     }
 
     @Override
