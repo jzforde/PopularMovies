@@ -13,18 +13,20 @@ import jforde.popularmovies.view.R;
  */
 
 public class FavoriteMoviesActivity extends AppCompatActivity {
+    private static final String TAG = "FavoriteMoviesActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        setContentView(R.layout.favorite_movies_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
 
     }
 
