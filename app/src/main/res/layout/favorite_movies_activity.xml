@@ -1,10 +1,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/favorites_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/activity_main_additional"/>
+    <include layout="@layout/favorite_movies_additional_activity"/>
 
 </RelativeLayout>
