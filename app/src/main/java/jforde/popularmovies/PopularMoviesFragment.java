@@ -26,9 +26,9 @@ import jforde.popularmovies.view.R;
  */
 
 public class PopularMoviesFragment extends Fragment implements MovieSorter.NetworkListener{
-    static MovieSorter movieSorter = new MovieSorter();
-    String TAG = "PopularMoviesFragment";
-    RecyclerView rv;
+    private static MovieSorter movieSorter = new MovieSorter();
+    private String TAG = "PopularMoviesFragment";
+    private RecyclerView rv;
 
     @Nullable
     @Override
@@ -42,13 +42,13 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
     private void setupRecyclerView(RecyclerView recyclerView) {
         Log.i(TAG, "SETTING UP RECYCLER VIEW");
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
-        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                movieSorter.popularMovies));
+        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), movieSorter.popularMovies));
+        Log.i(TAG, "I HAVE SET UP THE RECYCLEVIEW AND THE LIST SIZE IS " + movieSorter.popularMovies.size());
     }
 
     public static class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
-
+        final String TAG = "sRecyclerViewAdapter";
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<Movie> mValues;
@@ -62,7 +62,6 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.poster);
-                //mTextView = (TextView) view.findViewById(android.R.id.text1);
             }
         }
 
@@ -74,7 +73,7 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Log.i(ViewHolder.VHTAG, "CheeselistFragment:  IN ON CREATE VIEW HOLDER");
+            Log.i(ViewHolder.VHTAG, "PopularMoviesFragment:  IN ON CREATE VIEW HOLDER");
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_poster, parent, false);
             view.setBackgroundResource(mBackground);
@@ -84,7 +83,7 @@ public class PopularMoviesFragment extends Fragment implements MovieSorter.Netwo
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final Movie movie = mValues.get(position);
-
+            Log.i(TAG, "In popularMovieFragment onBindViewHolder");
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
