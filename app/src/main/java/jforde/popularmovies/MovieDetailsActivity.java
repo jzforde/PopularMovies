@@ -36,7 +36,7 @@ public class MovieDetailsActivity extends AppCompatActivity{
         TextView overview = (TextView) findViewById(R.id.overview);
         TextView releaseDate = (TextView) findViewById(R.id.release_date);
         TextView movieRtng = (TextView) findViewById(R.id.rating);
-        final String cheeseName = intent.getStringExtra(EXTRA_NAME);
+        final String movieTitle = intent.getStringExtra(EXTRA_NAME);
         moviePosterImg = intent.getStringExtra(EXTRA_POSTER_NAME);
         final String movieOverview = intent.getStringExtra(EXTRA_OVERVIEW);
         final String movieRatingTxt = intent.getStringExtra(EXTRA_VOTE_AVG);
@@ -51,7 +51,7 @@ public class MovieDetailsActivity extends AppCompatActivity{
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(cheeseName);
+        collapsingToolbar.setTitle(movieTitle);
         loadBackdrop();
     }
 
