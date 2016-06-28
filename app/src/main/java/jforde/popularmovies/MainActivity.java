@@ -41,14 +41,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), MainActivity.this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
+            //setUpViewPager(viewPager);
             viewPager.setAdapter(mSectionsPagerAdapter);
-            //setupViewPager(viewPager);
+
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -75,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:
+                case 0: position = 0;
                     Log.i(TAG, "IN POSITION " + position);
                     return new PopularMoviesFragment();
-                case 1:
-                    Log.i(TAG, "About to return TopMoviesFragment" );
+
+                case 1: position = 1;
+                    Log.i(TAG,  "IN POSITION " + position );
                     return new TopMoviesFragment();
+
             }
             return null;
         }
@@ -107,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpViewPager(ViewPager viewPager){
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new PopularMoviesFragment(), "Most Popular");
+        adapter.addFragment(new TopMoviesFragment(), "Top Rated Movies");
+        viewPager.setAdapter(adapter);
     }
 
     static class Adapter extends FragmentPagerAdapter {
@@ -137,5 +147,6 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitles.get(position);
         }
     }
+
 }
 

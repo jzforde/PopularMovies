@@ -80,6 +80,7 @@ public class MovieSorter extends Constants implements SortOptions {
         if (hasRequestBeenMade(URL)) {
             Log.i(TAG, "Getting movie list");
             getMovieList(URL);
+            mNetworkListener.onRequestFinished();
         } else {
             Request request = new Request.Builder()
                     .url(URL)
@@ -103,6 +104,7 @@ public class MovieSorter extends Constants implements SortOptions {
                     try {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
+                            Log.i(TAG, "Success getting movies");
                             JSONObject movieResults = new JSONObject(jsonData);
                             JSONArray movieArr = movieResults.getJSONArray("results");
 
@@ -123,8 +125,12 @@ public class MovieSorter extends Constants implements SortOptions {
                                     topRatedMovies.add(movie);
                                 }
                             }
+                            //mNetworkListener.onRequestFinished();
 
+                        }else {
+                            Log.e(TAG, "Response was unsuccessful");
                         }
+                        mNetworkListener.onRequestFinished();
                     } catch (JSONException j) {
                         Log.e(TAG, "Error getting movies");
                     }
@@ -132,7 +138,7 @@ public class MovieSorter extends Constants implements SortOptions {
             });
 
         }
-        mNetworkListener.onRequestFinished();
+        //mNetworkListener.onRequestFinished();
         if (populareRequestMade){
             return popularMovies;
         }else{
