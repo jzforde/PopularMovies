@@ -3,13 +3,16 @@ package jforde.popularmovies;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by jillianforde on 5/9/16.
- */
-public class Movie implements Parcelable {
+import io.realm.RealmModel;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+
+@RealmClass
+public class Movie implements Parcelable, RealmModel {
     public String poster_path;
     private String overview;
     private String release_date;
+    @PrimaryKey
     private int id;
     private String title;
     private double popularity;
