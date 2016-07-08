@@ -15,6 +15,7 @@ public class Movie implements Parcelable, RealmModel {
     @PrimaryKey
     private int id;
     private String title;
+    private String backdrop_path;
     private double popularity;
     private int vote_count;
     private double vote_average;
@@ -23,13 +24,14 @@ public class Movie implements Parcelable, RealmModel {
 
     public Movie(String poster_path, String overview,
                  String release_date, int id, String title,
-                 double popularity, int vote_count,
+                 String backdrop_path, double popularity, int vote_count,
                  double vote_average) {
         this.poster_path = poster_path;
         this.overview = overview;
         this.release_date = release_date;
         this.id = id;
         this.title = title;
+        this.backdrop_path = backdrop_path;
         this.popularity = popularity;
         this.vote_count = vote_count;
         this.vote_average = vote_average;
@@ -41,6 +43,7 @@ public class Movie implements Parcelable, RealmModel {
         this.release_date = in.readString();
         this.id = in.readInt();
         this.title = in.readString();
+        this.backdrop_path = in.readString();
         this.popularity = in.readDouble();
         this.vote_count = in.readInt();
         this.vote_average = in.readDouble();
@@ -85,6 +88,14 @@ public class Movie implements Parcelable, RealmModel {
         this.title = title;
     }
 
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
+    }
+
     public double getPopularity() {
         return popularity;
     }
@@ -111,7 +122,17 @@ public class Movie implements Parcelable, RealmModel {
 
     @Override
     public String toString() {
-        return poster_path;
+        return "Movie{" +
+                "poster_path='" + poster_path + '\'' +
+                ", overview='" + overview + '\'' +
+                ", release_date='" + release_date + '\'' +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", backdrop_path='" + backdrop_path + '\'' +
+                ", popularity=" + popularity +
+                ", vote_count=" + vote_count +
+                ", vote_average=" + vote_average +
+                '}';
     }
 
     @Override
@@ -126,6 +147,7 @@ public class Movie implements Parcelable, RealmModel {
         dest.writeString(release_date);
         dest.writeInt(id);
         dest.writeString(title);
+        dest.writeString(backdrop_path);
         dest.writeDouble(popularity);
         dest.writeInt(vote_count);
         dest.writeDouble(vote_average);
