@@ -5,5 +5,5 @@ package jforde.popularmovies;
  */
 
 public class Constants {
-    final String apiKey = "INSERT API KEY HERE";
+    final String apiKey = "?api_key=a907d34d89a9518ff85422c057b4da9d";
 }

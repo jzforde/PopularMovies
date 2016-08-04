@@ -34,19 +34,17 @@ public class MovieSorter extends Constants implements SortOptions {
     public ArrayList<Movie> topRatedMovies = new ArrayList<>();
     private boolean populareRequestMade = false;
     private boolean ratingRequestMade = false;
-    NetworkListener mNetworkListener;
+    public boolean responseIsSuccessfulIndicator = false;
 
     @Override
-    public void sortByPopularity(MovieSorter.NetworkListener networkListener) {
-        mNetworkListener = networkListener;
-        makeRequest(popURL);
+    public void sortByPopularity(MovieResponseListener movieResponseListener) {
+        makeRequest(popURL, movieResponseListener);
         Log.i(TAG, "Sorting by popularity");
 
     }
     @Override
-    public void sortByRating(MovieSorter.NetworkListener networkListener) {
-        mNetworkListener = networkListener;
-        makeRequest(topURL);
+    public void sortByRating(MovieResponseListener movieResponseListener) {
+        makeRequest(topURL, movieResponseListener);
         Log.i(TAG, "SORTING BY RATING");
     }
     public boolean hasRequestBeenMade(String URL){
@@ -76,11 +74,10 @@ public class MovieSorter extends Constants implements SortOptions {
         return null;
     }
 
-    public List<Movie> makeRequest(String URL) {
+    public List<Movie> makeRequest(String URL, final MovieResponseListener movieResponseListener) {
         if (hasRequestBeenMade(URL)) {
             Log.i(TAG, "Getting movie list");
             getMovieList(URL);
-            mNetworkListener.onRequestFinished();
         } else {
             Request request = new Request.Builder()
                     .url(URL)
@@ -104,6 +101,7 @@ public class MovieSorter extends Constants implements SortOptions {
                     try {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
+                            responseIsSuccessfulIndicator = true;
                             Log.i(TAG, "Success getting movies");
                             JSONObject movieResults = new JSONObject(jsonData);
                             JSONArray movieArr = movieResults.getJSONArray("results");
@@ -125,12 +123,18 @@ public class MovieSorter extends Constants implements SortOptions {
                                     topRatedMovies.add(movie);
                                 }
                             }
-                            //mNetworkListener.onRequestFinished();
+                            if(populareRequestMade){
+                                movieResponseListener.onSuccess(popularMovies);
+                            }else {
+                                movieResponseListener.onSuccess(topRatedMovies);
+                            }
+
+
 
                         }else {
                             Log.e(TAG, "Response was unsuccessful");
                         }
-                        mNetworkListener.onRequestFinished();
+
                     } catch (JSONException j) {
                         Log.e(TAG, "Error getting movies");
                     }
@@ -138,7 +142,6 @@ public class MovieSorter extends Constants implements SortOptions {
             });
 
         }
-        //mNetworkListener.onRequestFinished();
         if (populareRequestMade){
             return popularMovies;
         }else{
@@ -147,8 +150,5 @@ public class MovieSorter extends Constants implements SortOptions {
 
     }
 
-    public interface NetworkListener{
-        void onRequestFinished();
 
-    }
 }

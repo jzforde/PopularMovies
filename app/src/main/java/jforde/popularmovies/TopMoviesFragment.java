@@ -2,6 +2,7 @@ package jforde.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import jforde.popularmovies.view.R;
+
 
 import static jforde.popularmovies.TopMoviesFragment.RecyclerViewAdapter.ViewHolder.VHTAG;
 
@@ -26,8 +27,8 @@ import static jforde.popularmovies.TopMoviesFragment.RecyclerViewAdapter.ViewHol
  * Created by jillianforde on 6/19/16.
  */
 
-public class TopMoviesFragment extends Fragment implements MovieSorter.NetworkListener{
-    static MovieSorter movieSorter = new MovieSorter();
+public class TopMoviesFragment extends Fragment{
+    private static MovieSorter movieSorter = new MovieSorter();
     private String TAG = "TopMoviesFragment";
     RecyclerView rv;
     @Nullable
@@ -35,7 +36,7 @@ public class TopMoviesFragment extends Fragment implements MovieSorter.NetworkLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rv = (RecyclerView) inflater.inflate(
                 R.layout.top_movies_fragment, container, false);
-        movieSorter.sortByRating(this);
+        new TopMoviesTask().execute();
         Log.i(TAG, " onCreateView just happened");
         return rv;
     }
@@ -47,10 +48,21 @@ public class TopMoviesFragment extends Fragment implements MovieSorter.NetworkLi
                 movieSorter.topRatedMovies));
     }
 
-    @Override
-    public void onRequestFinished() {
-        setupRecyclerView(rv);
+    private class TopMoviesTask extends AsyncTask{
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            movieSorter.sortByRating(null);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            setupRecyclerView(rv);
+        }
     }
+
+
 
     public static class RecyclerViewAdapter
             extends RecyclerView.Adapter<TopMoviesFragment.RecyclerViewAdapter.ViewHolder> {
@@ -111,7 +123,7 @@ public class TopMoviesFragment extends Fragment implements MovieSorter.NetworkLi
                     intent.putExtra(MovieDetailsActivity.EXTRA_NAME, holder.mBoundString);
                     intent.putExtra(MovieDetailsActivity.EXTRA_OVERVIEW,holder.overview);
                     intent.putExtra(MovieDetailsActivity.EXTRA_RELEASE_DATE, holder.release_date);
-                    intent.putExtra(MovieDetailsActivity.EXTRA_VOTE_AVG,holder.vote_average);
+                    intent.putExtra(MovieDetailsActivity.EXTRA_VOTE_AVG, holder.vote_average);
                     context.startActivity(intent);
                 }
             });

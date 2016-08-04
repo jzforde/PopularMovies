@@ -1,21 +1,13 @@
 package jforde.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import jforde.popularmovies.view.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -33,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(false);
 
+        if (savedInstanceState == null) {
+            Fragment mPopularMoviesFragment = new PopularMoviesFragment();
+            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.fragment_holder, mPopularMoviesFragment).commit();
+        }
+        /*
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), MainActivity.this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -44,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         // save refernce to view pager
         tabLayout.setupWithViewPager(viewPager);
+        */
     }
-
+    /*
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         // tab titles
@@ -83,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return tabTitles[position];
         }
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,9 +93,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.favorites:
-                Intent favActivity = new Intent(this, FavoriteMoviesActivity.class);
+                Intent favActivity = new Intent(this, FavoriteMoviesFragment.class);
                 startActivity(favActivity);
-
+                break;
+            case R.id.popular:
+                Intent popMoviesActivity = new Intent(this, PopularMoviesActivity.class);
+                startActivity(popMoviesActivity);
+                break;
+            case R.id.top_rated:
+                Intent topRateMoviesActivity = new Intent(this, TopRatedMoviesActivity.class);
+                startActivity(topRateMoviesActivity);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

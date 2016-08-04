@@ -1,6 +1,5 @@
 package jforde.popularmovies;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,50 +16,41 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jillianforde on 6/19/16.
  */
 
-public class PopularMoviesFragment extends Fragment {
-    private String TAG = "PopularMoviesFragment";
+public class FavoriteMoviesFragment extends Fragment {
+    private static final String TAG = "FavoriteMoviesActivity";
     private RecyclerView rv;
-    private static MovieSorter movieSorter = new MovieSorter();
+    private List<Movie> favoriteMovies = new ArrayList<>();
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rv = (RecyclerView) inflater.inflate(R.layout.fragment_all_movies, container, false);
-        Log.i(TAG, " onCreateView just happened");
-        movieSorter.sortByPopularity(new MovieResponseListener() {
-            @Override
-            public void onSuccess(List<Movie> movies) {
-                setupRecyclerView(rv, movies);
-            }
-        });
         return rv;
     }
 
-    public void setupRecyclerView(RecyclerView recyclerView, List<Movie> movies) {
+    private void setupRecyclerView(RecyclerView recyclerView) {
         Log.i(TAG, "SETTING UP RECYCLER VIEW");
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
-        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), movies));
+        //TODO Extract data from DB
+
     }
 
-
-public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
+    public static class FavoriteMoviesAdapter
+            extends RecyclerView.Adapter<FavoriteMoviesFragment.FavoriteMoviesAdapter.ViewHolder> {
         final String TAG = "sRecyclerViewAdapter";
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<Movie> mValues;
         public static class ViewHolder extends RecyclerView.ViewHolder {
             static String VHTAG = "ViewHolder";
-            public String mBoundString;
-            private String overview;
-            private String poster;
-            private String vote_average;
-            private String release_date;
+
             public final View mView;
             public final ImageView mImageView;
 
@@ -71,30 +61,25 @@ public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter
             }
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<Movie> items) {
+        public FavoriteMoviesAdapter(Context context) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
-            mValues = items;
+
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Log.i(ViewHolder.VHTAG, "PopularMoviesFragment:  IN ON CREATE VIEW HOLDER");
+        public FavoriteMoviesFragment.FavoriteMoviesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            Log.i(FavoriteMoviesFragment.FavoriteMoviesAdapter.ViewHolder.VHTAG, "FavoriteMoviesFragment:  IN ON CREATE VIEW HOLDER");
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_poster, parent, false);
             view.setBackgroundResource(mBackground);
-            return new ViewHolder(view);
+            return new FavoriteMoviesFragment.FavoriteMoviesAdapter.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final FavoriteMoviesFragment.FavoriteMoviesAdapter.ViewHolder holder, int position) {
             final Movie movie = mValues.get(position);
-            holder.mBoundString = movieSorter.popularMovies.get(position).getTitle();
-            holder.overview = movieSorter.popularMovies.get(position).getOverview();
-            holder.release_date = movieSorter.popularMovies.get(position).getRelease_date();
-            holder.poster = movieSorter.popularMovies.get(position).getPoster_path();
-            holder.vote_average = Double.toString(movieSorter.popularMovies.get(position).getVote_average());
-            Log.i(TAG, "In popularMovieFragment onBindViewHolder");
+            Log.i(TAG, "In FavoriteMovies onBindViewHolder");
             //TODO: Make Request for videos
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,7 +90,7 @@ public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter
                     intent.putExtra(MovieDetailsActivity.EXTRA_NAME, movie.getTitle());
                     intent.putExtra(MovieDetailsActivity.EXTRA_OVERVIEW,movie.getOverview());
                     intent.putExtra(MovieDetailsActivity.EXTRA_RELEASE_DATE, movie.getRelease_date());
-                    intent.putExtra(MovieDetailsActivity.EXTRA_VOTE_AVG, holder.vote_average);
+                    intent.putExtra(MovieDetailsActivity.EXTRA_VOTE_AVG,Double.toString(movie.getVote_average()));
                     intent.putExtra(MovieDetailsActivity.EXTRA_VOTE_AVG_FOR_DB, movie.getVote_average());
                     intent.putExtra(MovieDetailsActivity.EXTRA_ID, movie.getId());
                     intent.putExtra(MovieDetailsActivity.EXTRA_POPULARITY, movie.getPopularity());
@@ -116,18 +101,17 @@ public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter
             });
 
             Glide.with(holder.mImageView.getContext())
-                    .load(holder.poster)
+                    .load(movie.getPoster_path())
                     .fitCenter()
                     .into(holder.mImageView);
         }
+
 
         @Override
         public int getItemCount() {
             return mValues.size();
         }
     }
-
-
 
 
 

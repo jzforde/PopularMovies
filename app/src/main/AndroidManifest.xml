@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="jforde.popularmovies.view"
+<manifest package="jforde.popularmovies"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+        android:name=".Moviedb"
         android:allowBackup="true"
         android:icon="@mipmap/clapperboard"
         android:label="@string/app_name"
@@ -20,7 +21,12 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="jforde.popularmovies.MainActivity" />
         </activity>
-        <activity android:name="jforde.popularmovies.FavoriteMoviesActivity"
+        <activity android:name="jforde.popularmovies.PopularMoviesActivity"
+                             android:parentActivityName="jforde.popularmovies.MainActivity">
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+                   android:value="jforde.popularmovies.MainActivity" />
+        </activity>
+        <activity android:name="jforde.popularmovies.TopRatedMoviesActivity"
                   android:parentActivityName="jforde.popularmovies.MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="jforde.popularmovies.MainActivity" />

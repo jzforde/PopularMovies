@@ -1,6 +1,6 @@
 package jforde.popularmovies;
 
 public interface SortOptions {
-     void sortByPopularity(MovieSorter.NetworkListener networkListener);
-     void sortByRating(MovieSorter.NetworkListener networkListener);
+     void sortByPopularity(MovieResponseListener movieResponseListener);
+     void sortByRating(MovieResponseListener movieResponseListener);
 }

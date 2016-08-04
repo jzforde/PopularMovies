@@ -5,4 +5,10 @@
     <string name="rating_sort">Top rated</string>
     <string name="secret_key">a907d34d89a9518ff85422c057b4da9d</string>
     <string name="favorites_item">Favorites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorite_movies">My Favorites</string>
+    <string name="content_desc_movie_poster">Movie poster</string>
+    <string name="rating_denominator">10</string>
 </resources>
